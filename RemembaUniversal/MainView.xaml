@@ -1,0 +1,80 @@
+﻿<Page
+    x:Class="RemembaUniversal.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RemembaUniversal"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:conv="using:RemembaUniversal.Converters"
+    DataContext="{Binding MainViewViewModel, Source={StaticResource MainViewModelLocator}}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <conv:BindingInspector x:Key="inspector"></conv:BindingInspector>
+        <conv:WebContentViewConverter x:Key="WebViewContentConverter" />
+        <conv:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+        <Style TargetType="TextBox">
+            <Setter  Property="Background" Value="Black"></Setter>
+            <Setter  Property="Foreground" Value="White"></Setter>
+        </Style>
+        <DataTemplate x:Key="node">
+            <Grid>
+                <StackPanel Visibility="{Binding Edit, Converter={StaticResource boolToVisibilityConverter}}" Orientation="Vertical" Margin="5">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Bold" Foreground="White"  Text="{Binding Title}"></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Foreground="LightGray" Text="{Binding Description}"></TextBlock>
+                </StackPanel>
+                <StackPanel Visibility="{Binding Edit, Converter={StaticResource boolToVisibilityConverter},ConverterParameter=Flip}" Orientation="Vertical" Margin="5">
+                    <TextBox BorderThickness="0" Background="#3a3737" Width="240" HorizontalAlignment="Stretch" TextWrapping="Wrap" FontWeight="Bold"  Text="{Binding Title,Mode=TwoWay}" KeyDown="TextBox_KeyDown"></TextBox>
+                    <TextBox BorderThickness="0" Background="#3a3737" Width="240" HorizontalAlignment="Stretch" TextWrapping="Wrap"  Text="{Binding Description,Mode=TwoWay}"  KeyDown="TextBox_KeyDown"></TextBox>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"></ColumnDefinition>
+            <ColumnDefinition Width="260"></ColumnDefinition>
+            <ColumnDefinition Width="320"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListView ItemTemplate="{StaticResource node}" x:Name="parentListView" ItemsSource="{Binding ParentList}" SelectedValue="{Binding SelectedParent, Mode=TwoWay}"/>
+        <ListView ItemTemplate="{StaticResource node}" Grid.Column="1" ItemsSource="{Binding ChildList}" x:Name="childListView"   SelectedValue="{Binding SelectedChild, Mode=TwoWay}"  />
+        <ListView ItemTemplate="{StaticResource node}" x:Name="subChildListView"  Grid.Column="2" ItemsSource="{Binding SubChildList}" SelectedValue="{Binding SelectedSubChild, Mode=TwoWay}" />
+        <WebView ScrollViewer.VerticalScrollMode="Disabled"  Margin="0,40,0,0"   Grid.Column="3"   HorizontalAlignment="Stretch" DataContext="{Binding SelectedNodeContent}" Tag="{Binding Data, Converter={StaticResource WebViewContentConverter},ConverterParameter='contentView'}"  x:Name="contentView"></WebView>
+        <Button Visibility="{Binding HasContent, Converter={StaticResource boolToVisibilityConverter}}" Margin="2" HorizontalAlignment="Right" BorderThickness="0" VerticalAlignment="Top" Height="40"  Grid.Column="3" x:Name="switchModeButton" Command="{Binding EditContent}" Click="SwitchMode_Click">
+            <Image Source="/Assets/Edit.png"></Image>
+        </Button>
+    </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Add child" Icon="People" x:Name="AddChildNodeCommandButton">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel Width="406">
+                            <TextBox Margin="3" Height="26" Text="{Binding NewNodeTitle,Mode=TwoWay}"></TextBox>
+                            <ComboBox Width="240" Height="30" ItemsSource="{Binding NodeTypes}" SelectedItem="{Binding NewNodeType,Mode=TwoWay}" SelectedValue="{Binding NewNodeType,Mode=TwoWay}">
+                            </ComboBox>
+                            <Button Command="{Binding AddChildNodeCommand}">Add child</Button>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Label="Add sibling" Icon="Add"  x:Name="AddSiblingNodeCommandButton">
+                <AppBarButton.Flyout>
+                    <Flyout>
+                        <StackPanel Width="406">
+                            <TextBox Margin="3" Height="26" Text="{Binding NewNodeTitle,Mode=TwoWay}"></TextBox>
+                            <ComboBox Width="240" Height="30" ItemsSource="{Binding NodeTypes}" SelectedItem="{Binding NewNodeType,Mode=TwoWay}" SelectedValue="{Binding NewNodeType,Mode=TwoWay}">
+                            </ComboBox>
+                            <Button Command="{Binding AddSiblingNodeCommand}">Add sibling</Button>
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarButton Icon="Save" Command="{Binding Save}"/>
+            <AppBarButton Command="{Binding DeleteNodeCommand}" Icon="Delete"/>
+            <AppBarSeparator/>
+            <AppBarButton Command="{Binding EditNodeCommand}" Icon="Edit"/>
+            <AppBarButton Command="{Binding Navi}" Icon="Up"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

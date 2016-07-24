@@ -1,0 +1,65 @@
+﻿== Example text ==
+Multiple sentences (-with multiple words-) form a paragraph.\\ Multiple ^sentences^ with ~multiple~ words %form% a paragraph.
+Avoid \*overlapping \_inline\* code\_.
+
+The [http://w3.org, W3C] is the  of web standards like ?HTML(Hypertext Markup Language)?.
+
+[(http://www.brainyquote.com/quotes/authors/a/albert_einstein.html,Albert Einstein)"Any man who can drive safely while kissing a pretty girl is simply not giving the kiss the attention it deserves."]
+
+[% preformatted Text
+ _    _   _   _  _   _   _ 
+( )  ( ) ( ) ( )/ ) ( ) ( )
+| |/\| | | | |   (   \ ^ /
+(__/\__) (_) (_)\_)   (_)
+%]
+
+[(js)%
+var pi2 = 2*Math.PI,  // useful ...
+    greeting = "hello world";
+function f(x) {
+   return x*x - 2*x + 3;
+}
+%]
+
+* a mixed
+* multilevel 
+*1. list
+*1I. with 
+*1I. roman
+*1Ig. and
+*1Ig. greek
+*1. letters
+
+; HTML: Hypertext Markup Language
+; XML : Extensible Markup language
+
+[| *First Column* | *Second Column* | *Third Column* |
+ |Table cell content
+
+in different paragraphs |inline _*formatting*_ and line\\ 
+breaks can be used |no list currently in tables |
+ | right adjusted| centered |left adjusted |
+ |2> spann two colums | [%code block%] |]
+
+
+
+ The equilibrium conditions for body _(2)_ are.
+
+[(1)$ \sum F_x -= A*cos\phi - B*1/2*\radic2 - 2F = 0$]
+[(2)$ \sum F_y -= -A*sin\phi + B*1/2*\radic2 - 3/2*F = 0$]
+[(3)$ \sum M_A -= A*cos\phi * d/2 - B*2d + 2F*4a = 0$]
+
+The moments of inertia for planar areas ($z = 0$) are
+
+[$I_x =\int_{A}y^2 dA ; I_y =\int_{A}x^2 dA ; I_xy = -\int_{A}xy dA$]
+
+[{>>,b,C:#bcd}"[$ax^2 + bx + c = 0$]
+[$x_{1,2} = {-b +- \radic(b^2 - 4ac)}/{2a}$]"]
+
+The differential equation of the elastic line with $0 <= x <= a$ is
+
+[${d^{2}w(x)}/{dx^2} = - {M_y(x)}/{E*I(x)}$]
+
+Applying the transformation matrix yields
+
+[$[x',y'] = [[cos\phi,-sin\phi,\Deltax][sin\phi,cos\phi,\Deltay]] \bull [x,y,1]$]

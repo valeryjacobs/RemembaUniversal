@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>WIKI Markup Editor</title>
+    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="wiky.js"></script>
+    <script type="text/javascript" src="wiky.lang.js"></script>
+    <script type="text/javascript" src="wiky.math.js"></script>
+    <link rel="stylesheet" type="text/css" href="wiky.css" />
+    <link rel="stylesheet" type="text/css" href="wiky.lang.css" />
+    <link rel="stylesheet" type="text/css" href="wiky.math.css" />
+    <style>
+        html * {
+           
+          
+            font-family: 'Segoe UI' !important;
+        }
+       </style>
+</head>
+<body style="background:black;color:white;">
+    <script>
+
+        var InEditMode = false;
+        function Preview() {
+            $('#output').html(Wiky.toHtml(document.getElementById('input').value));
+            $('#output').show();
+            $('#input').hide();
+
+            window.external.notify($('#input').text());
+        }
+
+        $('#input').keyup(function () {
+            window.external.notify($('#input').text());
+        })
+
+        function Switch()
+        {
+
+            if(InEditMode)
+            {
+                Preview();
+            }
+            else
+            {
+                Edit();
+            }
+
+            InEditMode = !InEditMode;
+        }
+
+        function Edit() {
+            $('#output').hide();
+            $('#input').show();
+        }
+
+        function SetContent(value) {
+            $('#input').text(value);
+            Preview();
+        }
+
+        function GetContent(value) {
+            return $('#input').text();
+        }
+
+        function SetRowCount(value) {
+            $('#input').rows = value;
+        }
+
+       
+    </script>
+    <textarea  style="width:100%;height:100%; background:#3a3737;color:white;border:0px;" id="input" rows="1200"></textarea>
+    <div id="output"></div>
+    <!--<button onclick="Preview();">
+        Preview
+    </button>
+    <button onclick="Edit();">
+        Edit
+    </button>-->
+
+</body>
+</html>
